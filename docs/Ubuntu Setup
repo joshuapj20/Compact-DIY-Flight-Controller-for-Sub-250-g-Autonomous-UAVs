@@ -1,0 +1,23 @@
+
+I have downloaded and set up Ubuntu Linux development environment using Oracle VirtualBox on my home computer.
+This required that I restart my computer to enter my computers BIOS mode, in order to enable Secure Virtual Machine.  (SVM).
+
+I also then downloaded the ArduPilot source code from GitHub and installed all necessary dependencies:
+
+sudo apt update
+
+sudo apt install -y git python3-pip python3-dev python3-venv build-essential libxml2-dev libxslt1-dev
+git clone --recurse-submodules https://github.com/ArduPilot/ardupilot.git
+cd ardupilot
+Tools/environment_install/install-prereqs-ubuntu.sh -y
+
+I also found that it was taking far too long to download, so I ended up not installing any graphical dependencies:
+export SKIP_AP_GRAPHIC_ENV=1
+Tools/environment_install/install-prereqs-ubuntu.sh -y
+
+Compiling and running ardupilot: ./Tools/autotest/sim_vehicle.py -v ArduCopter -j 2
+I successfully compiled the ArduCopter firmware.
+
+I also installed the ARM64 cross-complication toolchain. This was as my computer uses an AMD Ryzen x86-64 processor, whereas the Rasberry Pi Compute Module 5 uses an ARM64 processor. Therefore this tool allows software to be compiled for the CM5 architecture from the Ubuntu development environment.
+sudo apt install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64-linux-gnu
+
